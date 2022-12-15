@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>formulir</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Access-Control-Allow-Origin" content="*">
+    <meta name="Origin" content="localhost">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: #eee;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.2.min.js"
+        integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="flex justify-center items-center h-screen">
+        <div class="p-6 w-1/3  bg-white shadow-xl  rounded-xl">
+            <form id="form" method="POST">
+                <div class="flex flex-col gap-y-5">
+                    <div class="flex flex-col">
+                        <label for="nama" class="block mb-2 ml-2 text-sm font-medium text-gray-900 dark:text-white">Nama Anda</label>
+                        <input type="text" id="nama"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="Paijo" required>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="kota" class="block mb-2 ml-2 text-sm font-medium text-gray-900 dark:text-white">Kota Anda</label>
+                        <input type="text" id="kota"
+                        class="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="Surabaya" required>
+                    </div>
+                    
+                    <button type="submit" id="submit"
+                    class="text-white bg-orange-500 hover:bg-white hover:text-gray-800 focus:ring-4 border-transparent border-2 hover:border-gray-800 focus:outline-none focus:ring-orange-500 font-medium rounded-lg text-sm p-5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 place-self-center flex">Register
+                    Hubungi Sekarang</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    const form = document.querySelector("#form")
+    const submitButton = document.querySelector("#submit")
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbx_JeakRc0Io4_8fzJJ5tjSwXEoRl03c8-fQvwWdlOdWMVAziLlQIMOX_IbGlNfZ5gS/exec'
+
+    form.addEventListener('submit', e => {
+        submitButton.disabled = true
+        e.preventDefault()
+        let requestBody = new FormData(form)
+        $.ajax({
+            url: scriptURL,
+            crossDomain: true,
+            method: 'POST',
+            headers: {
+                "accept": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Origin": "google.com",
+            }
+        }).then(response => {
+                alert('Success!', response)
+                submitButton.disabled = false
+            })
+            .catch(error => {
+                alert('Error!', error.message)
+                submitButton.disabled = false
+
+            }
+            )
+    })
+</script>
+</html>
